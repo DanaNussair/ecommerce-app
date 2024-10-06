@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package product;
+
+// The product message definition
+message ProductDto {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  float price = 4;
+  int32 quantity = 5;
+  string category = 6;
+  string imageUrl = 7;
+}
+
+// The service definition
+service ProductService {
+  rpc GetProduct (GetProductRequest) returns (ProductDto);
+  rpc ListProducts (ListProductsRequest) returns (ListProductsResponse);
+  rpc CreateProduct (CreateProductRequest) returns (ProductDto);
+  rpc UpdateProduct (UpdateProductRequest) returns (ProductDto);
+  rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse);
+}
+
+// Request message for GetProduct
+message GetProductRequest {
+  int32 id = 1;
+}
+
+// Request message for ListProducts
+message ListProductsRequest {}
+
+// Response message for ListProducts
+message ListProductsResponse {
+  repeated ProductDto products = 1;
+}
+
+// Request message for CreateProduct
+message CreateProductRequest {
+  string name = 2;
+  optional string description = 3;
+  float price = 4;
+  int32 quantity = 5;
+  optional string category = 6;
+  optional string imageUrl = 7;
+}
+
+// Request message for UpdateProduct
+message UpdateProductRequest {
+  int32 id = 1;
+  optional string name = 2;
+  optional string description = 3;
+  optional float price = 4;
+  optional int32 quantity = 5;
+  optional string category = 6;
+  optional string imageUrl = 7;
+}
+
+// Request message for DeleteProduct
+message DeleteProductRequest {
+  int32 id = 1;
+}
+
+// Response message for DeleteProduct
+message DeleteProductResponse {
+  bool success = 1;
+}
