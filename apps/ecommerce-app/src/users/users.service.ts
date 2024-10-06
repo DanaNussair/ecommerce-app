@@ -32,9 +32,4 @@ export class UsersService {
   async createUser(data: any): Promise<User> {
     return this.userModel.create(data);
   }
-
-  async remove(id: string): Promise<void> {
-    const user = await this.findById(+id);
-    await user.destroy();
-  }
 }

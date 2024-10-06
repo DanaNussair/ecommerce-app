@@ -8,6 +8,7 @@ import {
   DataType,
   BeforeCreate,
   BeforeUpdate,
+  AllowNull,
 } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 
@@ -18,13 +19,16 @@ export class User extends Model {
   @Column(DataType.INTEGER)
   id: number;
 
+  @AllowNull(false)
   @Column(DataType.STRING)
   name: string;
 
+  @AllowNull(false)
   @IsEmail
   @Column({ type: DataType.STRING, unique: true })
   email: string;
 
+  @AllowNull(false)
   @Column(DataType.STRING)
   password: string;
 
@@ -45,6 +49,12 @@ export class User extends Model {
 
   @Column(DataType.INTEGER)
   age: number;
+
+  @Column({
+    type: DataType.ENUM({ values: ['female', 'male', 'other'] }),
+    defaultValue: 'male',
+  })
+  gender: 'female' | 'male' | 'other';
 
   @Column(DataType.DATE)
   createdAt: Date;
