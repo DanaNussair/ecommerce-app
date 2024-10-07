@@ -14,7 +14,7 @@ async function bootstrap() {
     origin: 'http://localhost:3000',
   });
 
-  await app.listen(3001);
+  await app.listen(3002);
 
   // Create gRPC Microservice
   app.connectMicroservice({

@@ -3,6 +3,7 @@ import { ItemModule } from './item/item.module';
 import { OrderController } from './order.controller';
 import { OrderService } from './order.service';
 import { Item } from './item/item.model';
+import { Order } from './order.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 
@@ -18,10 +19,10 @@ import { ConfigModule } from '@nestjs/config';
       uri: process.env.DATABASE_URL,
       autoLoadModels: true,
       synchronize: true,
-      models: [Item],
+      models: [Item, Order],
     }),
     // Register the Product model with SequelizeModule
-    SequelizeModule.forFeature([Item]),
+    SequelizeModule.forFeature([Item, Order]),
   ],
   controllers: [OrderController],
   providers: [OrderService],

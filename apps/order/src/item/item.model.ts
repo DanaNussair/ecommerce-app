@@ -9,6 +9,7 @@ import {
   ForeignKey,
 } from 'sequelize-typescript';
 import { Product } from 'apps/product/src/product.model';
+import { Order } from '../order.model';
 
 @Table
 export class Item extends Model {
@@ -18,10 +19,14 @@ export class Item extends Model {
   id: number;
 
   @AllowNull(false)
-  @Column(DataType.STRING)
-  quantity: string;
+  @Column(DataType.INTEGER)
+  quantity: number;
 
   @ForeignKey(() => Product)
   @Column(DataType.INTEGER)
   productId: number;
+
+  @ForeignKey(() => Order)
+  @Column(DataType.INTEGER)
+  orderId: number;
 }

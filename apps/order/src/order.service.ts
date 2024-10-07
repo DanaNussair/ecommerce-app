@@ -1,41 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { Order } from './order.model';
+import { InjectModel } from '@nestjs/sequelize';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderDto } from './dto/update-order.dto';
 
 @Injectable()
 export class OrderService {
-  private orders = [];
+  constructor(@InjectModel(Order) private orderModel: typeof Order) {}
 
-  create(createOrderDto: any) {
-    const newOrder = { id: Date.now(), ...createOrderDto };
-    this.orders.push(newOrder);
-    return newOrder;
+  async create(
+    createOrderDto: Omit<CreateOrderDto, keyof any[]>,
+  ): Promise<Order> {
+    return await this.orderModel.create(createOrderDto);
   }
 
-  findAll() {
-    return this.orders;
+  async findAll(): Promise<Order[]> {
+    return await this.orderModel.findAll();
   }
 
-  findOne(id: number) {
-    return this.orders.find((order) => order.id === id);
+  async findOne(id: number): Promise<Order> {
+    return await this.orderModel.findOne({ where: { id } });
   }
 
-  update(id: number, updateOrderDto: any) {
-    const orderIndex = this.orders.findIndex((order) => order.id === id);
-    if (orderIndex > -1) {
-      this.orders[orderIndex] = {
-        ...this.orders[orderIndex],
-        ...updateOrderDto,
-      };
-      return this.orders[orderIndex];
-    }
-    return null;
+  async update(
+    id: number,
+    updateOrderDto: UpdateOrderDto,
+  ): Promise<[number, Order[]] | [number]> {
+    return await this.orderModel.update(updateOrderDto, { where: { id } });
   }
 
-  remove(id: number) {
-    const orderIndex = this.orders.findIndex((order) => order.id === id);
-    if (orderIndex > -1) {
-      const removedOrder = this.orders.splice(orderIndex, 1);
-      return removedOrder[0];
-    }
-    return null;
+  async remove(id: number): Promise<Order> {
+    const product = await this.findOne(id);
+    product.destroy();
+    return product;
   }
 }

@@ -2,7 +2,6 @@ import {
   Controller,
   Get,
   Post,
-  Put,
   Delete,
   Body,
   Param,
@@ -26,11 +25,6 @@ export class ItemController {
   @UseInterceptors(GrpcToHttpInterceptor)
   create(@Body() createItemDto: AddItemRequest) {
     return this.itemService.create(createItemDto);
-  }
-
-  @Put(':id')
-  update(@Param('id') id: number, @Body() updateItemDto: any) {
-    return this.itemService.update(id, updateItemDto);
   }
 
   @Delete(':id')

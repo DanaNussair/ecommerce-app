@@ -14,11 +14,13 @@ export interface ItemDto {
   id: string;
   quantity: number;
   productId: number;
+  orderId: number;
 }
 
 export interface AddItemRequest {
   quantity: number;
   productId: number;
+  orderId: number;
 }
 
 export interface AddItemResponse {

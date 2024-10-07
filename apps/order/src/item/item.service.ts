@@ -56,10 +56,6 @@ export class ItemService implements OnModuleInit {
     }
   }
 
-  update(id: number, updateItemDto: any) {
-    return `This action updates a #${id} item ${updateItemDto}`;
-  }
-
   remove(id: number) {
     return `This action removes a #${id} item`;
   }
