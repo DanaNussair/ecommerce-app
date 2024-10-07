@@ -3,20 +3,18 @@ import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 
 describe('ProductController', () => {
-  let productController: ProductController;
+  let controller: ProductController;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [ProductController],
       providers: [ProductService],
     }).compile();
 
-    productController = app.get<ProductController>(ProductController);
+    controller = module.get<ProductController>(ProductController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(productController.getHello()).toBe('Hello World!');
-    });
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
   });
 });

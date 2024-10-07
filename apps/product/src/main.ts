@@ -1,21 +1,30 @@
-import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { join } from 'path';
-
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { ProductModule } from './product.module';
-import { PRODUCT } from '@app/common';
+import { Transport } from '@nestjs/microservices';
+import { PRODUCT_PACKAGE_NAME } from '@app/common';
+import { join } from 'path';
+import { AllExceptionsFilter } from 'apps/main/src/all-exceptions.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    ProductModule,
-    {
-      transport: Transport.GRPC,
-      options: {
-        protoPath: join(__dirname, '../product.proto'),
-        package: PRODUCT,
-      },
+  const app = await NestFactory.create(ProductModule);
+  const { httpAdapter } = app.get(HttpAdapterHost);
+
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+  app.enableCors({
+    origin: 'http://localhost:3000',
+  });
+
+  await app.listen(3001);
+
+  // Create gRPC Microservice
+  app.connectMicroservice({
+    transport: Transport.GRPC,
+    options: {
+      package: PRODUCT_PACKAGE_NAME,
+      protoPath: join(__dirname, '../product.proto'),
     },
-  );
-  await app.listen();
+  });
+
+  await app.startAllMicroservices();
 }
 bootstrap();

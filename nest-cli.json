@@ -6,29 +6,29 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/ecommerce-app/tsconfig.app.json"
+    "tsConfigPath": "apps/main/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/ecommerce-app",
+  "root": "apps/main",
   "projects": {
-    "ecommerce-app": {
+    "main": {
       "type": "application",
-      "root": "apps/ecommerce-app",
+      "root": "apps/main",
       "entryFile": "src/main",
       "sourceRoot": "./",
       "compilerOptions": {
-        "tsConfigPath": "apps/ecommerce-app/tsconfig.app.json",
+        "tsConfigPath": "apps/main/tsconfig.app.json",
         "assets": ["proto/*.proto"],
         "watchAssets": true
       }
     },
-    "orders": {
+    "order": {
       "type": "application",
-      "root": "apps/orders",
+      "root": "apps/order",
       "entryFile": "src/main",
       "sourceRoot": "./",
       "compilerOptions": {
-        "tsConfigPath": "apps/orders/tsconfig.app.json",
+        "tsConfigPath": "apps/order/tsconfig.app.json",
         "assets": ["proto/*.proto"],
         "watchAssets": true
       }

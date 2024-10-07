@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package item;
+
+message ItemDto {
+  string id = 1;
+  int32 quantity = 3;
+  int32 product_id = 4;
+}
+
+message AddItemRequest {
+  int32 quantity = 3;
+  int32 product_id = 4;
+}
+
+message AddItemResponse {
+  ItemDto item = 1;
+}
+
+message GetItemRequest {
+  string id = 1;
+}
+
+message GetItemResponse {
+  ItemDto item = 1;
+}
+
+message DeleteItemRequest {
+  string id = 1;
+}
+
+message DeleteItemResponse {
+  bool success = 1;
+}
+
+service ItemService {
+  rpc AddItem(AddItemRequest) returns (AddItemResponse);
+  rpc GetItem(GetItemRequest) returns (GetItemResponse);
+  rpc DeleteItem(DeleteItemRequest) returns (DeleteItemResponse);
+}

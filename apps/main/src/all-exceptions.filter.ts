@@ -44,6 +44,9 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
     ) {
       myResponseObj.statusCode = 422;
       myResponseObj.response = exception.message.replaceAll(/\n/g, ' ');
+    } else if (exception instanceof Sequelize.EmptyResultError) {
+      myResponseObj.statusCode = 404;
+      myResponseObj.response = exception.message;
     } else {
       myResponseObj.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
       myResponseObj.response = 'Internal Server Error';

@@ -17,7 +17,10 @@ export class ProductService {
   ) {}
 
   async getProduct(getProductRequest: GetProductRequest): Promise<Product> {
-    return this.productModel.findByPk(getProductRequest.id);
+    return this.productModel.findOne({
+      where: { id: getProductRequest.id },
+      rejectOnEmpty: true,
+    });
   }
 
   async listProducts(): Promise<ListProductsResponse> {

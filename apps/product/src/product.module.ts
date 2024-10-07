@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { APP_FILTER } from '@nestjs/core';
+import { GrpcServerExceptionFilter } from 'nestjs-grpc-exceptions';
 
-import { ProductController } from './product.controller';
+import { ProductController, ProductGrpcController } from './product.controller';
 import { ProductService } from './product.service';
 import { Product } from './product.model';
 
@@ -22,7 +24,13 @@ import { Product } from './product.model';
     // Register the Product model with SequelizeModule
     SequelizeModule.forFeature([Product]),
   ],
-  controllers: [ProductController],
-  providers: [ProductService],
+  controllers: [ProductController, ProductGrpcController],
+  providers: [
+    ProductService,
+    {
+      provide: APP_FILTER,
+      useClass: GrpcServerExceptionFilter,
+    },
+  ],
 })
 export class ProductModule {}
