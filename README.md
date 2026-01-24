@@ -2,7 +2,7 @@
 
 This is a microservices-based e-commerce application. The application consists of three main microservices: Order, Product, and Main (User and Auth). 
 
-*Note: So far the order/product microservices communite but not the main*
+*Note: So far the order/product microservices communicate but not the main*
 
 ## Getting Started
 This app was built using NestJS.
